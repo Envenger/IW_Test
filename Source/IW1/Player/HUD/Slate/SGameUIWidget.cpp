@@ -102,17 +102,17 @@ void SGameUIWidget::Construct(const FArguments& InArgs)
 }
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 /**/
-FString SGameUIWidget::GetScore() const
+FText SGameUIWidget::GetScore() const
 {
-	return FString::FromInt(HUDPtr->GameScore);
+	return FText::FromString(FString::FromInt(HUDPtr->GameScore));
 }
 
-FString SGameUIWidget::GetRound() const
+FText SGameUIWidget::GetRound() const
 {
-	return FString::FromInt(1);
+	return FText::FromString(FString::FromInt(1));
 }
 
-FString SGameUIWidget::GetHighestScore() const
+FText SGameUIWidget::GetHighestScore() const
 {
-	return FString::FromInt(HUDPtr->HighestScore);
+	return FText::FromString(FString::FromInt(HUDPtr->HighestScore));
 }

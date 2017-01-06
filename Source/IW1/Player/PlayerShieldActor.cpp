@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+j// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "IW1.h"
 #include "PlayerPawn.h"
@@ -24,19 +24,19 @@ APlayerShieldActor::APlayerShieldActor()
 	RightShield = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RightShieldMesh"));
 	if (RightShield)
 	{
-		RightShield->AttachTo(RootComponent);
+		RightShield->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	CenterShield = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CenterShieldMesh"));
 	if (CenterShield)
 	{
-		CenterShield->AttachTo(RootComponent);
+		CenterShield->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	LeftShield = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LeftShieldMesh"));
 	if (LeftShield)
 	{
-		LeftShield->AttachTo(RootComponent);
+		LeftShield->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	DefenseValueOfShield = 800;

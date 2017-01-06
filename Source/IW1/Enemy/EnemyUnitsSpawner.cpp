@@ -355,16 +355,16 @@ void AEnemyUnitsSpawner::FlyingDroneSpawnTick()
 	}
 }
 
-const FVector AEnemyUnitsSpawner::GetFlyingSpawnLocation(TSubclassOf<AFlyingDrone> FlyingClass, EMovementDirection MovementDirection, int32 SpawnXSection) const
+const FVector AEnemyUnitsSpawner::GetFlyingSpawnLocation(TSubclassOf<AFlyingDrone> FlyingClass, EMovementDirection _MovementDirection, int32 SpawnXSection) const
 {
 	AFlyingDrone* TemplateFlyingDrone = Cast<AFlyingDrone>(FlyingClass->GetDefaultObject());
 	FVector SpawnLocation(0, 0, 0);
-	if (MovementDirection == EMovementDirection::Right)
+	if (_MovementDirection == EMovementDirection::Right)
 	{
 		FMovementSection SpawnSection(SpawnXSection, -(TemplateFlyingDrone->YSectionDifference));
 		SpawnLocation = GetLocationFromSection(SpawnSection);
 	}
-	else if (MovementDirection == EMovementDirection::Left)
+	else if (_MovementDirection == EMovementDirection::Left)
 	{
 		FMovementSection SpawnSection(SpawnXSection, NoOfYSections + (TemplateFlyingDrone->YSectionDifference) - 1);
 		SpawnLocation = GetLocationFromSection(SpawnSection);
@@ -373,7 +373,7 @@ const FVector AEnemyUnitsSpawner::GetFlyingSpawnLocation(TSubclassOf<AFlyingDron
 	return SpawnLocation;
 }
 
-void AEnemyUnitsSpawner::SpawnFlyingDrone(TSubclassOf<AFlyingDrone> FlyingDroneClassClass, EMovementDirection MovementDirection, int32 XSection)
+void AEnemyUnitsSpawner::SpawnFlyingDrone(TSubclassOf<AFlyingDrone> FlyingDroneClassClass, EMovementDirection _MovementDirection, int32 XSection)
 {
 	const FVector SpawnLocation = GetFlyingSpawnLocation(FlyingDroneClassClass, MovementDirection, XSection);
 	AFlyingDrone* FlyingDrone = GetWorld()->SpawnActor<AFlyingDrone>(FlyingDroneClassClass, SpawnLocation, FRotator(0, 180, 0));
@@ -385,11 +385,11 @@ void AEnemyUnitsSpawner::SpawnFlyingDrone(TSubclassOf<AFlyingDrone> FlyingDroneC
 	FlyingDrone->PlatformStartYLoc = GetLocationFromSection(FMovementSection(0, 0)).Y;
 	FlyingDrone->PlatformEndYLoc = GetLocationFromSection(FMovementSection(0, NoOfYSections - 1)).Y;
 
-	if (MovementDirection == EMovementDirection::Right)
+	if (_MovementDirection == EMovementDirection::Right)
 	{
 		FlyingDrone->EndFlyingYLoc = GetLocationFromSection(FMovementSection(0, NoOfYSections + (FlyingDrone->YSectionDifference - 1))).Y;
 	}
-	else if (MovementDirection == EMovementDirection::Left)
+	else if (_MovementDirection == EMovementDirection::Left)
 	{
 		FlyingDrone->EndFlyingYLoc = GetLocationFromSection(FMovementSection(0, -(FlyingDrone->YSectionDifference))).Y;
 	}

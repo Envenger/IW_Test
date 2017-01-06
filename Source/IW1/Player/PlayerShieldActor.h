@@ -11,8 +11,8 @@ UCLASS()
 class IW1_API APlayerShieldActor : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	APlayerShieldActor();
 
@@ -35,12 +35,12 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 	UPROPERTY(EditdefaultsOnly, Category = SheilDefense)
-	float DefenseValueOfShield;
+		float DefenseValueOfShield;
 
 	void SetShieldOwner(APlayerPawn* NewPawn);
 
 	UPROPERTY()
-	APlayerPawn* PlayerPawn;
+		APlayerPawn* PlayerPawn;
 
 	TArray<float> CurrentShieldDefense;
 

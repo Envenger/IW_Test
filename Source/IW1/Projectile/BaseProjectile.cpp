@@ -21,7 +21,7 @@ ABaseProjectile::ABaseProjectile()
 	if (ProjectileCapsule)
 	{
 		ProjectileCapsule->SetRelativeRotation(FRotator(90, 0, 0));
-		ProjectileCapsule->AttachTo(RootComponent);
+		ProjectileCapsule->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	ProjectileComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComponent"));
@@ -38,7 +38,6 @@ void ABaseProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	SetLifeSpan(LifeTime);
-
 }
 
 void ABaseProjectile::Tick(float DeltaTime)
@@ -84,3 +83,4 @@ void ABaseProjectile::NotifyActorBeginOverlap(AActor* OtherActor)
 		Destroy();
 	}
 }
+

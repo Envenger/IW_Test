@@ -21,7 +21,7 @@ ABaseTurretActor::ABaseTurretActor()
 	TurretHead = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TurretHead"));
 	if (TurretHead)
 	{
-		TurretHead->AttachTo(RootComponent);
+		TurretHead->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	MinProjectileFireDelay = 0.7;
@@ -83,8 +83,8 @@ const FRotator ABaseTurretActor::GetTurretHeadDirection(const FVector TurretLoca
 void ABaseTurretActor::FireProjectile()
 {
 	FRotator SpawnRotation = TurretHead->GetSocketRotation("FiringSocket");
-	SpawnRotation.Pitch += FMath::RandRange(-0.5, 0.5);
-	SpawnRotation.Yaw += FMath::RandRange(-0.5, 0.5);
+	SpawnRotation.Pitch += FMath::FRandRange(-0.5, 0.5);
+	SpawnRotation.Yaw += FMath::FRandRange(-0.5, 0.5);
 	FVector SpawnLocation = TurretHead->GetSocketLocation("FiringSocket");
 	GetWorld()->SpawnActor<ABaseProjectile>(NormalProjectileClass, SpawnLocation, SpawnRotation);
 	PlayMuzzleEffects(TurretHead, "FiringSocket", FVector(3.2), 0.2);

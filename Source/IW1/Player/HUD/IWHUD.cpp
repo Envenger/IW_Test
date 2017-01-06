@@ -17,8 +17,8 @@ void AIWHUD::BeginPlay()
 
 	if (HealthBarMaterialBrush.GetResourceObject()->IsA(UMaterialInterface::StaticClass()))
 	{
-		UMaterialInterface* HealthBarMaterial = Cast<UMaterialInterface>(HealthBarMaterialBrush.GetResourceObject());
-		HealthBarMaterialD = UMaterialInstanceDynamic::Create(HealthBarMaterial, this);
+		UMaterialInterface* HealthBarMaterialInterface = Cast<UMaterialInterface>(HealthBarMaterialBrush.GetResourceObject());
+		HealthBarMaterialD = UMaterialInstanceDynamic::Create(HealthBarMaterialInterface, this);
 		HealthBarMaterialBrush.SetResourceObject(HealthBarMaterialD);
 
 		HealthBarMaterialD->SetScalarParameterValue("LifeRatio", 100 / 100-0.001);
@@ -134,7 +134,7 @@ void AIWHUD::CloseMenu()
 
 void AIWHUD::RestartGameClicked()
 {
-	GetWorld()->GetAuthGameMode()->RestartGame();
+	GetWorld()->GetFirstPlayerController()->RestartLevel();
 }
 
 void AIWHUD::ExitGameClicked()

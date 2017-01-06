@@ -5,6 +5,27 @@
 #include "GameFramework/Actor.h"
 #include "BaseProjectile.generated.h"
 
+
+USTRUCT()
+struct FPickUpStruct2
+{
+	GENERATED_USTRUCT_BODY()
+
+		UPROPERTY(EditDefaultsOnly, Category = PickUps)
+		TSubclassOf<AActor> PickUpClass;
+
+	UPROPERTY(EditDefaultsOnly, Category = PickUps)
+		float DropChancePercentage;
+
+	FPickUpStruct2()
+	{
+		PickUpClass = nullptr;
+		DropChancePercentage = 0;
+	}
+};
+
+
+
 UCLASS()
 class IW1_API ABaseProjectile : public AActor
 {
@@ -16,14 +37,14 @@ public:
 
 	/** Dummy root to attach the capsule */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ProjectileComponents)
-	class USceneComponent* DummyRoot;
+	USceneComponent* DummyRoot;
 
 	/** Collision capsule for the projectile */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ProjectileComponents)
-	class UCapsuleComponent* ProjectileCapsule;
+	UCapsuleComponent* ProjectileCapsule;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ProjectileComponents)
-	class UProjectileMovementComponent* ProjectileComponent;
+	UProjectileMovementComponent* ProjectileComponent;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -38,3 +59,4 @@ public:
 
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 };
+

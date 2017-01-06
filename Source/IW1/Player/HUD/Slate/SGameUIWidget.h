@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Widgets/SCompoundWidget.h"
 #include "Player/HUD/IWHUD.h"
 
 class IW1_API SGameUIWidget : public SCompoundWidget
@@ -19,11 +20,11 @@ public:
 	/** The box containing the inventory */
 	TSharedPtr<SOverlay> GameUIOverlay;
 
-	FString GetScore() const;
+	FText GetScore() const;
 
-	FString GetRound() const;
+	FText GetRound() const;
 
-	FString GetHighestScore() const;
+	FText GetHighestScore() const;
 
 protected:
 	TWeakObjectPtr<class AIWHUD> HUDPtr;

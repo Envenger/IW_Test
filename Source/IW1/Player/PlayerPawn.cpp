@@ -28,19 +28,19 @@ APlayerPawn::APlayerPawn()
 	OuterWheel = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("OuterWheel"));
 	if (OuterWheel)
 	{
-		OuterWheel->AttachTo(RootComponent);
+		OuterWheel->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	RightHand = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RightHand"));
 	if (RightHand)
 	{
-		RightHand->AttachTo(RootComponent);
+		RightHand->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	LeftHand = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LeftHand"));
 	if (LeftHand)
 	{
-		LeftHand->AttachTo(RootComponent);
+		LeftHand->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	WeaponComponent = CreateDefaultSubobject<UPlayerWeaponComponent>(TEXT("WeaponComp"));
@@ -57,25 +57,25 @@ APlayerPawn::APlayerPawn()
 		ArrowComponent->ArrowSize = ArrowComponent->ArrowSize*1.5;
 		ArrowComponent->bTreatAsASprite = true;
 		ArrowComponent->bIsScreenSizeScaled = true;
-		ArrowComponent->AttachTo(RootComponent);
+		ArrowComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm0"));
 	if (SpringArm)
 	{
-		SpringArm->AttachTo(RootComponent);
+		SpringArm->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 		SpringArm->TargetArmLength = 160.0f; // The camera follows at this distance behind the character	
 		SpringArm->SocketOffset = FVector(0.f, 0.f, 60.f);
 		SpringArm->bEnableCameraLag = false;
 		SpringArm->CameraLagSpeed = 15.f;
 		SpringArm->bDoCollisionTest = false;
-		SpringArm->AttachTo(RootComponent);
+		SpringArm->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera0"));
 	if (Camera)
 	{
-		Camera->AttachTo(SpringArm, USpringArmComponent::SocketName);
+		Camera->AttachToComponent(SpringArm, FAttachmentTransformRules::KeepRelativeTransform, USpringArmComponent::SocketName);
 		Camera->bUsePawnControlRotation = false; // Don't rotate camera with controller
 	}
 
@@ -217,14 +217,14 @@ const float APlayerPawn::GetMovementSpeed(const float DeltaTime) const
 }
 
 // Called to bind functionality to input
-void APlayerPawn::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+void APlayerPawn::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
-	Super::SetupPlayerInputComponent(InputComponent);
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	InputComponent->BindAxis("MoveRight", this, &APlayerPawn::VerticalInput);
-	InputComponent->BindAction("Fire", IE_Pressed, this, &APlayerPawn::FireInput);
+	PlayerInputComponent->BindAxis("MoveRight", this, &APlayerPawn::VerticalInput);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &APlayerPawn::FireInput);
 
-	FInputActionBinding& toggle = InputComponent->BindAction("Menu", IE_Pressed, this, &APlayerPawn::MenuButtonClicked);
+	FInputActionBinding& toggle = PlayerInputComponent->BindAction("Menu", IE_Pressed, this, &APlayerPawn::MenuButtonClicked);
 	toggle.bExecuteWhenPaused = true;
 }
 
@@ -277,7 +277,6 @@ void APlayerPawn::ProcessMenuButton(EMenuOpenType MenuOpenType)
 			{
 				if (bIsGameInProgress)
 				{
-					APlayerController* PC = Cast<APlayerController>(GetController());
 					UGameplayStatics::SetGamePaused(this, false);
 					PC->bShowMouseCursor = false;
 					HUD->CloseMenu();
@@ -287,7 +286,6 @@ void APlayerPawn::ProcessMenuButton(EMenuOpenType MenuOpenType)
 			{
 				if (bIsGameInProgress)
 				{
-					APlayerController* PC = Cast<APlayerController>(GetController());
 					UGameplayStatics::SetGamePaused(this, true);
 					PC->bShowMouseCursor = true;
 					HUD->OpenMenu(MenuOpenType);

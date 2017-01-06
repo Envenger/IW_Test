@@ -32,37 +32,37 @@ UCLASS()
 class IW1_API ABaseEnemyActor : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	ABaseEnemyActor();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
+
 	// Called every frame
-	virtual void Tick( float DeltaSeconds ) override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	UPROPERTY()
-	AEnemyUnitsSpawner* EnemeySpawner;
+		AEnemyUnitsSpawner* EnemeySpawner;
 
 	virtual void EnemyTakeDamage(float Damage);
 
 	UPROPERTY(EditDefaultsOnly, Category = Stats)
-	float EnemyScorePoints;
+		float EnemyScorePoints;
 
 	UPROPERTY(EditDefaultsOnly, Category = Stats)
-	float Health;
+		float Health;
 
 	UPROPERTY(EditDefaultsOnly, Category = Stats)
-	bool bIsStompable;
+		bool bIsStompable;
 
 	virtual void DestroyUnit(bool bSpawnDestructable = false);
 
 	UPROPERTY(EditDefaultsOnly, Category = PickUps)
-	TArray<FPickUpStruct> PickUpItems;
+		TArray<FPickUpStruct> PickUpItems;
 
 	void DropItem();
-
-
 };
+
+

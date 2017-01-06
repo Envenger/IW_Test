@@ -12,7 +12,7 @@ AHoverCraft::AHoverCraft()
 	}
 	if (EnemyMesh)
 	{
-		EnemyMesh->AttachTo(HoverBase);
+		EnemyMesh->AttachToComponent(HoverBase, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 	bHoveringUp = true;
 	MinHoverHeight = 35;

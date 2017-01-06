@@ -4,6 +4,7 @@
 #include "Enemy/BaseEnemyActor.h"
 #include "PlayerProjectile.h"
 
+
 APlayerProjectile::APlayerProjectile()
 {
 	ProjectileDamage = 40;

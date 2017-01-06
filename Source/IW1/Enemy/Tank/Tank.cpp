@@ -8,13 +8,13 @@ ATank::ATank()
 	TankNozzel = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("HoverBase"));
 	if (TankNozzel)
 	{
-		TankNozzel->AttachTo(RootComponent);
+		TankNozzel->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	TankWheels = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("HoverWheels"));
 	if (TankWheels)
 	{
-		TankWheels->AttachTo(RootComponent);
+		TankWheels->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	ProjectileVelocity = 7000;
@@ -67,12 +67,12 @@ void ATank::FireProjectile()
 	Super::FireProjectile();
 }
 
-const float ATank::CalculateProjectileLaunchAngle(float TargetHeight, float TargetDistance, float ProjectileVelocity, float ProjectileGravity) const
+const float ATank::CalculateProjectileLaunchAngle(float TargetHeight, float TargetDistance, float _ProjectileVelocity, float _ProjectileGravity) const
 {
 	float TX = TargetDistance;
 	float TY = TargetHeight;
-	float G = ProjectileGravity;
-	float V = ProjectileVelocity;
+	float G = _ProjectileGravity;
+	float V = _ProjectileVelocity;
 	float R1 = FMath::Sqrt(FMath::Pow(V, 4) - G*(G*(FMath::Pow(TX, 2)) + ((2 * TY)*(FMath::Pow(V, 2)))));
 	float A1 = FMath::Atan(FMath::Pow(V, 2) + R1) / (G / TY);
 	float A2 = FMath::Atan(FMath::Pow(V, 2) - R1) / (G / TY);
